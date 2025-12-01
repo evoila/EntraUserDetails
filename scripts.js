@@ -18,7 +18,7 @@ const msalInstance = new msal.PublicClientApplication(msalConfig);
    ======================== */
 const BASE_FIELDS = ['displayName', 'userPrincipalName', 'employeeId', 'accountEnabled', 'department', 'employeeType', 'companyName'];
 const EXTRA_FIELDS = [
-    'id', 'isSoftDeleted', 'streetAddress', 'city', 'state', 'postalCode',
+    'id', 'streetAddress', 'city', 'state', 'postalCode',
     'employeeHireDate', 'employeeLeaveDateTime', 'givenName', 'jobTitle',
     'manager', 'mail', 'mailNickname', 'mobile', 'country', 'usageLocation',
     'physicalDeliveryOfficeName', 'preferredLanguage', 'surname', 'telephoneNumber',
