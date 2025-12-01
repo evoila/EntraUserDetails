@@ -277,7 +277,7 @@ table.user-table td {
     right: 0 !important;
     top: 0;
     height: 100%;
-    width: 920px;
+    width: 70%;
     max-width: calc(100% - 40px);
     background: linear-gradient(180deg, var(--panel), #262626);
     box-shadow: -20px 0 60px rgba(0, 0, 0, 0.7);
@@ -286,7 +286,7 @@ table.user-table td {
     z-index: 1300;
     overflow: auto;
     transform: translateX(100%);
-    transition: transform .25s ease;
+    transition: transform .25s ease-in-out;
 }
 
 .detail-drawer.open {
@@ -467,8 +467,4 @@ input {
     background: var(--muted-panel);
     border: 1px solid var(--divider);
     color: var(--text-secondary)
-}
-
-#detailDrawer.detail-drawer.open {
-    transform: translateX(0) !important;
 }

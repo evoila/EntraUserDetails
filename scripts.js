@@ -1,8 +1,8 @@
 /* ========================
            CONFIG (SET YOUR VALUES)
            ======================== */
-const tenantId = '1b2bcaa0-2052-4943-bd9b-2511e7d57a21';
-const clientId = 'c34ceb14-3218-4ec5-8bd4-39a66ede3603';
+const tenantId = 'a65e9058-ba4d-481d-b114-5eba2e0684e2';
+const clientId = '8f9e4db4-37ef-4870-af3a-85a4ab74505a';
 const redirectUri = "";
 
 const msalConfig = {
@@ -433,18 +433,12 @@ async function openUserDetails(encodedId) {
 
     console.log("Opening detail drawer, id:", id);
 
-    // 1️⃣ Show skeleton immediately
     openDetailSkeleton("Loading...", "");
-
-    // 2️⃣ Open drawer (CSS handles slide-in)
-    drawer.classList.add("open");
-    drawer.style.transform = "translateX(0)";
 
     try {
         const token = await getToken();
         if (!token) throw new Error("No token available");
 
-        // 3️⃣ Fetch user and related data
         const user = allUsers.find(u => u.id === id) || null;
         console.log("USER OBJECT:", user);
 
@@ -455,7 +449,6 @@ async function openUserDetails(encodedId) {
 
         const rolesMap = await loadDirectoryRoles(token);
 
-        // 4️⃣ Categorize groups
         const categorized = { security: [], m365: [], distribution: [], other: [] };
         (groups || []).forEach(g => {
             const t = g['@odata.type'] || '';
@@ -470,19 +463,16 @@ async function openUserDetails(encodedId) {
             } else categorized.other.push(g);
         });
 
-        // 5️⃣ Map licenses to friendly names
         const subSkus = await loadSubscribedSkus(token);
         const licenseDisplay = (licenses || []).map(l => {
             const friendly = subSkus?.[l.skuId] || l.skuPartNumber || l.skuId;
             return { sku: friendly, skuId: l.skuId };
         });
 
-        // 6️⃣ Directory roles
         const dirRoles = (groups || [])
             .filter(g => (g['@odata.type'] || '').includes('directoryRole'))
             .map(r => rolesMap[r.id] || r.displayName || r.id);
 
-        // 7️⃣ Render all details
         renderUserDetailsPanel(user, categorized, licenseDisplay, dirRoles);
     } catch (err) {
         console.error("Failed to load expanded details", err);
@@ -490,6 +480,7 @@ async function openUserDetails(encodedId) {
         const user = allUsers.find(u => u.id === id) || null;
         renderUserDetailsPanel(user, {}, [], []);
     }
+    drawer.classList.add("open");
 }
 
 
@@ -540,6 +531,19 @@ function renderUserDetailsPanel(user, categorized, licenseDisplay, dirRoles) {
 /* ========================
    Drawer open/close helpers
    ======================== */
+
+function closeDetailDrawer() {
+    const drawer = document.getElementById("detailDrawer");
+    if (!drawer) return;
+
+    drawer.classList.remove("open");
+    drawer.style.transform = "translateX(100%)";
+
+    // Optional: clear content for safety
+    const wrapper = document.getElementById("detailGridWrapper");
+    if (wrapper) wrapper.innerHTML = "";
+}
+
 function closeDetailDrawer() { document.getElementById("detailDrawer")?.classList.remove("open"); }
 function openFilterDrawer() { document.getElementById("filterDrawer")?.classList.add("open"); }
 function closeFilterDrawer() { document.getElementById("filterDrawer")?.classList.remove("open"); }
@@ -549,6 +553,7 @@ function closeColumnDrawer() { document.getElementById("columnDrawer")?.classLis
 /* ========================
    Column + event bindings + init
    ======================== */
+
 document.getElementById("searchInput")?.addEventListener("input", applySearchAndFilters);
 document.getElementById("openFilter").onclick = openFilterDrawer;
 document.getElementById("openColumns").onclick = openColumnDrawer;
