@@ -1,8 +1,8 @@
 /* ========================
            CONFIG (SET YOUR VALUES)
            ======================== */
-const tenantId = 'a65e9058-ba4d-481d-b114-5eba2e0684e2';
-const clientId = '8f9e4db4-37ef-4870-af3a-85a4ab74505a';
+const tenantId = process.env.TENANT_ID;
+const clientId = process.env.CLIENT_ID;
 const redirectUri = "";
 
 const msalConfig = {
