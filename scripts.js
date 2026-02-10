@@ -1,18 +1,28 @@
 /* ========================
-           CONFIG (SET YOUR VALUES)
-           ======================== */
-const tenantId = process.env.TENANT_ID;
-const clientId = process.env.CLIENT_ID;
-const redirectUri = "";
+    CONFIG (Load from Env)
+======================== */
 
-const msalConfig = {
-    auth: { clientId, authority: `https://login.microsoftonline.com/${tenantId}`, redirectUri },
-    cache: { cacheLocation: "localStorage", storeAuthStateInCookie: false }
-};
+async function loadConfig() {
+    const res = await fetch('/api/config');
+    return await res.json();
+}
 
-const GRAPH_SCOPES = ["User.Read.All", "Directory.Read.All", "Group.Read.All"];
-const msalInstance = new msal.PublicClientApplication(msalConfig);
+loadConfig().then(cfg => {
+    const msalConfig = {
+        auth: {
+            clientId: cfg.clientId,
+            authority: `https://login.microsoftonline.com/${cfg.tenantId}`,
+            redirectUri: ""
+        },
+        cache: {
+            cacheLocation: "localStorage",
+            storeAuthStateInCookie: false
+        }
+    };
 
+    const GRAPH_SCOPES = ["User.Read.All", "Directory.Read.All", "Group.Read.All"];
+    const msalInstance = new msal.PublicClientApplication(msalConfig);
+});
 /* ========================
    FIELDS / STATE
    ======================== */
