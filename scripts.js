@@ -3,26 +3,55 @@
 ======================== */
 
 async function loadConfig() {
-    const res = await fetch('/api/config');
+    const res = await fetch('/api/config', { cache: 'no-store' });
+    if (!res.ok) {
+        throw new Error(`Config endpoint failed: ${res.status} ${res.statusText}`);
+    }
     return await res.json();
 }
 
-loadConfig().then(cfg => {
-    const msalConfig = {
-        auth: {
-            clientId: cfg.clientId,
-            authority: `https://login.microsoftonline.com/${cfg.tenantId}`,
-            redirectUri: ""
-        },
-        cache: {
-            cacheLocation: "localStorage",
-            storeAuthStateInCookie: false
-        }
-    };
 
-    const GRAPH_SCOPES = ["User.Read.All", "Directory.Read.All", "Group.Read.All"];
-    const msalInstance = new msal.PublicClientApplication(msalConfig);
+async function initializeAuth() {
+    try {
+        const cfg = await loadConfig();
+
+        const tenantId = cfg.tenantId;
+        const clientId = cfg.clientId;
+        const redirectUri = ""; // or your explicit redirect
+
+        const msalConfig = {
+            auth: {
+                clientId,
+                authority: `https://login.microsoftonline.com/${tenantId}`,
+                redirectUri
+            },
+            cache: {
+                cacheLocation: "localStorage",
+                storeAuthStateInCookie: false
+            }
+        };
+
+        // Make instance available globally if you prefer: window.msalInstance = ...
+        msalInstance = new msal.PublicClientApplication(msalConfig);
+
+        // If you do any redirect handling:
+        if (msalInstance.handleRedirectPromise) {
+            await msalInstance.handleRedirectPromise();
+        }
+
+        // Continue with your login flow, e.g.:
+        // await msalInstance.loginRedirect({ scopes: ["User.Read"] });
+
+    } catch (err) {
+        console.error("initializeAuth error", err);
+    }
+}
+
+// Ensure this runs after the DOM is ready:
+document.addEventListener("DOMContentLoaded", () => {
+    initializeAuth();
 });
+
 /* ========================
    FIELDS / STATE
    ======================== */
