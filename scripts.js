@@ -16,7 +16,7 @@ const msalInstance = new msal.PublicClientApplication(msalConfig);
 /* ========================
    FIELDS / STATE
    ======================== */
-const BASE_FIELDS = ['displayName', 'userPrincipalName', 'usertype', 'employeeId', 'accountEnabled', 'department', 'employeeType', 'companyName'];
+const BASE_FIELDS = ['displayName', 'userPrincipalName', 'userType', 'employeeId', 'accountEnabled', 'department', 'employeeType', 'companyName'];
 const EXTRA_FIELDS = [
     'id', 'streetAddress', 'city', 'state', 'postalCode',
     'employeeHireDate', 'employeeLeaveDateTime', 'givenName', 'jobTitle',
@@ -38,7 +38,7 @@ const ALL_FIELDS = [...BASE_FIELDS, ...EXTRA_FIELDS];
 const FRIENDLY = {
     "displayName": "Display Name",
     "userPrincipalName": "User Principal Name",
-    "usertype": "User Type",
+    "userType": "User Type",
     "employeeId": "EmployeeID",
     "accountEnabled": "Account Enabled",
     "givenName": "First Name",
