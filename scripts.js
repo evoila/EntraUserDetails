@@ -22,16 +22,16 @@ const EXTRA_FIELDS = [
     'employeeHireDate', 'employeeLeaveDateTime', 'givenName', 'jobTitle',
     'manager', 'mail', 'mailNickname', 'mobile', 'country', 'usageLocation',
     'physicalDeliveryOfficeName', 'preferredLanguage', 'surname', 'telephoneNumber',
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdSupervisioryOrganisation',
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdManagementLevelId',
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdJobProfileName',
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdJobFamilyId',
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdLocationHierarchy',
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdCostCenter',
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdCostCenterHierarchy',
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdContingentWorkerID',
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdManagementLevelDescription',
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdEmployeeID'
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdSupervisioryOrganisation',
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdManagementLevelId',
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdJobProfileName',
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdJobFamilyId',
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdLocationHierarchy',
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdCostCenter',
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdCostCenterHierarchy',
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdContingentWorkerID',
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdManagementLevelDescription',
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdEmployeeID'
 ];
 const ALL_FIELDS = [...BASE_FIELDS, ...EXTRA_FIELDS];
 
@@ -51,16 +51,16 @@ const FRIENDLY = {
     "usageLocation": "Usage Location",
     "physicalDeliveryOfficeName": "Office Location",
     "id": "ID",
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdSupervisioryOrganisation': "Supervisory Organisation",
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdManagementLevelId': "Management Level ID",
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdJobProfileName': "Job Profile Name",
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdJobFamilyId': "Job Family ID",
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdLocationHierarchy': "Location Hierarchy",
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdCostCenter': "Cost Center",
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdCostCenterHierarchy': "Cost Center Hierarchy",
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdContingentWorkerID': "Contingent Worker ID",
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdManagementLevelDescription': "Management Level Description",
-    'extension_053de6c8cbb24c53b4ca2638882c659f_wdEmployeeID': "Employee ID"
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdSupervisioryOrganisation': "Supervisory Organisation",
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdManagementLevelId': "Management Level ID",
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdJobProfileName': "Job Profile Name",
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdJobFamilyId': "Job Family ID",
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdLocationHierarchy': "Location Hierarchy",
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdCostCenter': "Cost Center",
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdCostCenterHierarchy': "Cost Center Hierarchy",
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdContingentWorkerID': "Contingent Worker ID",
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdManagementLevelDescription': "Management Level Description",
+    'extension_bea95b197e374313be04e4a7b99b63ec_wdEmployeeID': "Employee ID"
 };
 
 let allUsers = [];
