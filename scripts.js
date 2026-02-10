@@ -10,47 +10,26 @@ async function loadConfig() {
     return await res.json();
 }
 
-
-async function initializeAuth() {
+async function initializeMsalAuth() {
     try {
         const cfg = await loadConfig();
 
         const tenantId = cfg.tenantId;
         const clientId = cfg.clientId;
-        const redirectUri = ""; // or your explicit redirect
+        const redirectUri = window.location.origin;
 
         const msalConfig = {
-            auth: {
-                clientId,
-                authority: `https://login.microsoftonline.com/${tenantId}`,
-                redirectUri
-            },
-            cache: {
-                cacheLocation: "localStorage",
-                storeAuthStateInCookie: false
-            }
+            auth: { clientId, authority: `https://login.microsoftonline.com/${tenantId}`, redirectUri },
+            cache: { cacheLocation: "localStorage", storeAuthStateInCookie: false }
         };
 
-        // Make instance available globally if you prefer: window.msalInstance = ...
-        msalInstance = new msal.PublicClientApplication(msalConfig);
+        window.msalInstance = new msal.PublicClientApplication(msalConfig);
 
-        // If you do any redirect handling:
-        if (msalInstance.handleRedirectPromise) {
-            await msalInstance.handleRedirectPromise();
-        }
-
-        // Continue with your login flow, e.g.:
-        // await msalInstance.loginRedirect({ scopes: ["User.Read"] });
-
+        await msalInstance.handleRedirectPromise();
     } catch (err) {
-        console.error("initializeAuth error", err);
+        console.error("MSAL setup failed", err);
     }
 }
-
-// Ensure this runs after the DOM is ready:
-document.addEventListener("DOMContentLoaded", () => {
-    initializeAuth();
-});
 
 /* ========================
    FIELDS / STATE
@@ -532,7 +511,6 @@ async function openUserDetails(encodedId) {
     drawer.classList.add("open");
 }
 
-
 function renderUserDetailsPanel(user, categorized, licenseDisplay, dirRoles) {
     console.log("USER:", user);
     const wrapper = document.getElementById("detailGridWrapper");
@@ -619,6 +597,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     populateStaticIcons();
     populateFilterFields();
     // Initialize auth then load all users
+    await initializeMsalAuth();
     const ok = await initializeAuth();
     if (ok) {
         await loadUsers();
