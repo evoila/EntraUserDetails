@@ -282,6 +282,15 @@ function applySearchAndFilters() {
         if (q && !text.includes(q)) return false;
         return activeFilters.every(f => applyFilter(u, f));
     });
+    // Update the user count with filtered results
+    const countElement = document.getElementById("userCount");
+    if (countElement) {
+        countElement.textContent = `${data.length} users`;
+        // Optional: show total if filtered
+        if (q || activeFilters.length > 0) {
+            countElement.textContent = `${data.length} of ${allUsers.length} users`;
+        }
+    }
     renderTable(data);
 }
 
@@ -560,7 +569,10 @@ document.getElementById("openFilter").onclick = openFilterDrawer;
 document.getElementById("openColumns").onclick = openColumnDrawer;
 document.getElementById("resetAll").onclick = () => {
     const si = document.getElementById("searchInput"); if (si) si.value = '';
-    activeFilters = []; redrawActiveFilters(); renderTable(allUsers);
+    activeFilters = [];
+    redrawActiveFilters();
+    document.getElementById("userCount").textContent = `${allUsers.length} users`;
+    renderTable(allUsers);
 };
 
 /* DOM ready init */
