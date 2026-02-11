@@ -31,6 +31,8 @@ async function initializeMsalAuth() {
     }
 }
 
+const GRAPH_SCOPES = ["User.Read.All", "Directory.Read.All", "Group.Read.All"];
+
 /* ========================
    FIELDS / STATE
    ======================== */
