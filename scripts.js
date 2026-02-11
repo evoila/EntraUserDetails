@@ -283,11 +283,22 @@ function escapeHtml(str) { return (str || '').replace(/[&<>"'`=\/]/g, s => ({ '&
    ======================== */
 function sortBy(field) {
     if (sortField === field) sortDir *= -1; else { sortField = field; sortDir = 1; }
-    const sorted = [...(allUsers || [])].sort((a, b) => {
+
+    // Get the currently filtered data instead of sorting allUsers
+    const q = (document.getElementById("searchInput")?.value || '').toLowerCase().trim();
+    const filteredData = (allUsers || []).filter(u => {
+        const text = `${u?.displayName || ''} ${u?.mail || ''} ${u?.userPrincipalName || ''} ${u?.department || ''} ${u?.companyName || ''} ${u?.officeLocation || ''}`.toLowerCase();
+        if (q && !text.includes(q)) return false;
+        return activeFilters.every(f => applyFilter(u, f));
+    });
+
+    // Sort the filtered data
+    const sorted = [...filteredData].sort((a, b) => {
         const x = ((a[field] || '') + "").toLowerCase();
         const y = ((b[field] || '') + "").toLowerCase();
         if (x > y) return sortDir; if (x < y) return -sortDir; return 0;
     });
+
     renderTable(sorted);
 }
 
